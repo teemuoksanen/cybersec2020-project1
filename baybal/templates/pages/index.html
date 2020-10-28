@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>BayBal</title>
+  </head>
+  <body>
+
+
+  <h1>BayBal</h1>
+
+  <p>Welcome, <strong>{{user.username}}</strong>!</p>
+
+  <p>You current balance: <strong>{{own_account.balance}} euros</strong></p>
+  
+  <form action='logout/' method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout"/>
+  </form>
+
+  
+  <h2>Make a payment</h2>
+
+  <form id='transfer' action='transfer/' method="GET">
+    {% csrf_token %}
+    <input type="hidden" name="user_from" value="{{user.username}}"/>
+
+    <span>To:</span><br/>
+    <select name="user_to">
+      {% for u in users %}
+      <option value="{{u.user.username}}">{{u.user.username}}</option>
+      {% endfor %}
+    </select><br/>
+
+    <span>Amount:</span><br/>
+    <input type="number" name="amount"/><br/>
+
+    <span>Message:</span><br/>
+    <input type="textfield" name="message"/><br/>
+
+    <input type="submit" value="Pay"/>
+  </form>
+
+  
+  <h2>Payments you have received</h2>
+
+  <table>
+    <tr>
+      <th><strong>From</strong></th>
+      <th><strong>Amount</strong></th>
+      <th><strong>Message</strong></th>
+    </tr>
+    {% for t in received %}
+    <tr>
+      <td>{{t.user_from}}</td>
+      <td>{{t.amount}} €</td>
+      <td>{{t.message|safe}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+  <h2>Payments you have made</h2>
+
+  <table>
+    <tr>
+      <th><strong>To</strong></th>
+      <th><strong>Amount</strong></th>
+      <th><strong>Message</strong></th>
+    </tr>
+    {% for t in paid %}
+    <tr>
+      <td>{{t.user_to}}</td>
+      <td>{{t.amount}} €</td>
+      <td>{{t.message|safe}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+  </body>
+</html>

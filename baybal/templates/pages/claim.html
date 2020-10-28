@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>BayBal</title>
+  </head>
+  <body>
+
+
+  <h1>BayBal</h1>
+
+  <p>Welcome, <strong>{{user.username}}</strong>!</p>
+  
+  <form action='logout/' method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout"/>
+  </form>
+
+  
+  <h2>Claim your opening balance</h2>
+
+  <p>It seems that you have not opened fiat account on BayBal. If you open a new fiat account, you will receive a free deposit of 100 €!</p>
+
+  <form action='claim/' method="GET">
+    {% csrf_token %}
+    <input type="submit" value="Open account and claim free deposit"/>
+  </form>
+
+
+  </body>
+</html>
